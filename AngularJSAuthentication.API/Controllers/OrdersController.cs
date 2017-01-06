@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Security;
 
 namespace AngularJSAuthentication.API.Controllers
 {
     [RoutePrefix("api/Orders")]
     public class OrdersController : ApiController
     {
-        [Authorize]
+        [Authorize(Roles = "user")]
         [Route("")]
         public IHttpActionResult Get()
         {

@@ -46,7 +46,7 @@ namespace AngularJSAuthentication.API
                 TokenEndpointPath = new PathString("/token"),
                 
                 // We’ve specified the expiry for token to be 24 hours, so if the user tried to use the same token for authentication after 24 hours from the issue time, his request will be rejected and HTTP status code 401 is returned.
-                AccessTokenExpireTimeSpan = TimeSpan.FromHours(1), // Test on 1 minute
+                AccessTokenExpireTimeSpan = TimeSpan.FromSeconds(10), // Test on 1 minute
 
                 // We’ve specified the implementation on how to validate the credentials for users asking for tokens in custom class named “SimpleAuthorizationServerProvider”.
                 Provider = new SimpleAuthorizationServerProvider()
