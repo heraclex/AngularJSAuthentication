@@ -49,7 +49,10 @@ namespace AngularJSAuthentication.API
                 AccessTokenExpireTimeSpan = TimeSpan.FromSeconds(10), // Test on 1 minute
 
                 // We’ve specified the implementation on how to validate the credentials for users asking for tokens in custom class named “SimpleAuthorizationServerProvider”.
-                Provider = new SimpleAuthorizationServerProvider()
+                Provider = new SimpleAuthorizationServerProvider(),
+
+
+                RefreshTokenProvider = new SimpleRefreshTokenProvider()
             };
 
             // Token Generation
