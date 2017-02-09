@@ -21,4 +21,18 @@ namespace AngularJSAuthentication.API
         public DbSet<RefreshToken> RefreshTokens { get; set; }
     }
 
+    public class MachineInfor
+    {
+        private string machineName = Environment.MachineName;
+
+        public string ConnStr
+        {
+            get
+            {
+                //if (this.machineName.Contains("TOANLE"))
+                    return string.Empty;
+            }
+        }
+    }
+
 }
