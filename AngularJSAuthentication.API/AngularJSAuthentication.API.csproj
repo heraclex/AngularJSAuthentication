@@ -174,7 +174,9 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\RefreshToken.cs" />
+    <Compile Include="Entities\Test.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationTypes.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
