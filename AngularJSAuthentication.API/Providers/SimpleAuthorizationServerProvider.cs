@@ -143,6 +143,39 @@ namespace AngularJSAuthentication.API.Providers
             // Now generating the token happens behind the scenes when we call “context.Validated(identity)”.
             context.Validated(ticket);
         }
-        
+
+        /// <summary>
+        /// The request context contains all the claims stored previously for this user, we need to add logic which allows us to issue new claims or updating existing claims 
+        /// and contain them into the new access token generated before sending it to the user.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public override Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
+        {
+            //We are reading the client id value from the original ticket, this is the client id which get stored in 
+            // the magical signed string, then we compare this client id against the client id sent with the request, 
+            // if they are different we’ll reject this request because we need to make sure that the refresh token used here is bound to the same client when it was generated.
+            var originalClient = context.Ticket.Properties.Dictionary["as:client_id"];
+            var currentClient = context.ClientId;
+
+            if (originalClient != currentClient)
+            {
+                context.SetError("invalid_clientId", "Refresh token is issued to a different clientId.");
+                return Task.FromResult<object>(null);
+            }
+
+            // Change auth ticket for refresh token requests
+            // We have the chance now to add new claims or remove existing claims, this was not achievable without refresh tokens, 
+            // then we call “context.Validated(newTicket)” which will generate new access token and return it in the response body.
+            var newIdentity = new ClaimsIdentity(context.Ticket.Identity);
+            newIdentity.AddClaim(new Claim("newClaim", "newValue"));
+
+            // Lastly after this method executes successfully, the flow for the code will hit method “CreateAsync” in class “SimpleRefreshTokenProvider” 
+            // and a new refresh token is generated and returned in the response along with the new access token.
+            var newTicket = new AuthenticationTicket(newIdentity, context.Ticket.Properties);
+            context.Validated(newTicket);
+
+            return Task.FromResult<object>(null);
+        }
     }
 }

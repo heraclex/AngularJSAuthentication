@@ -4,7 +4,7 @@
 'use strict';
 app.controller('loginController', ['$scope', '$location', 'authService', function ($scope, $location, authService) {
 
-    $scope.loginData = { userName: "Taiseer", password: "SuperPass" };
+    $scope.loginData = { userName: "Taiseer", password: "SuperPass", useRefreshTokens: false };
 
     $scope.message = "";
 
